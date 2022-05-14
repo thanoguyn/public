@@ -1,0 +1,8 @@
+curl -fsSL https://raw.githubusercontent.com/thanoguyn/oguyn/main/template_http.com.conf  | sed "s/template.com/$1/g" > /etc/httpd/conf.d/$1.conf;
+cd /var/www/html/;
+curl -fsSL http://wordpress.org/latest.tar.gz | tar zxvf -;
+mkdir -p /var/www/html/$1;
+mv wordpress/ /var/www/html/$1/www;
+sudo chown apache:apache /var/www/html/$1/www -R;sudo chcon -t httpd_sys_content_t /var/www/html/$1/www -R;sudo chcon -t httpd_sys_rw_content_t /var/www/html/$1/www -R;
+mysql -u root -p$3 -e "create database $2 CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;CREATE USER $2@localhost IDENTIFIED BY '$3';GRANT ALL PRIVILEGES ON $2.* TO $2@localhost IDENTIFIED BY '$3';";
+sudo service httpd configtest;
