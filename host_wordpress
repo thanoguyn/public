@@ -1,4 +1,4 @@
-curl -fsSL https://raw.githubusercontent.com/thanoguyn/oguyn/main/template_http.com.conf  | sed "s/template.com/$1/g" > /etc/httpd/conf.d/$1.conf;
+curl -fsSL https://raw.githubusercontent.com/thanoguyn/public/main/template_http.com.conf  | sed "s/template.com/$1/g" > /etc/httpd/conf.d/$1.conf;
 cd /var/www/html/;
 curl -fsSL http://wordpress.org/latest.tar.gz | tar zxvf -;
 mkdir -p /var/www/html/$1;
