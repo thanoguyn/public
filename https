@@ -1,4 +1,4 @@
-curl -fsSL https://raw.githubusercontent.com/thanoguyn/public/main/template_http.com.conf  | sed "s/template.com/$0/g" > /etc/httpd/conf.d/$0.conf;
+curl -fsSL https://raw.githubusercontent.com/thanoguyn/public/main/template.com.conf  | sed "s/template.com/$0/g" > /etc/httpd/conf.d/$0.conf;
 cd /var/www/html/;
 mkdir -p $0/www;
 mkdir -p $0/ssl;
