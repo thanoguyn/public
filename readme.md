@@ -5,7 +5,7 @@
 ## 2. Chạy lệnh sau để đăng nhập vào vps
 
 ```jsx
-ssh root@dev.pvmr.vn
+ssh root@ip.com
 ```
 
 ## 3. Có 2 lựa chọn
