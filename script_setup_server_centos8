@@ -7,7 +7,6 @@ sudo dnf install httpd httpd-tools -y;
 sudo systemctl enable httpd.service;
 sudo systemctl start httpd.service;
 sudo dnf install mariadb -y;
-sudo mysql_secure_installation;
 sudo systemctl enable mariadb.service;
 sudo service mariadb status;
 sudo service mysql status;
