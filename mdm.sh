@@ -4,7 +4,7 @@ echo -e "Bypass MDM for MacOS 14"
 echo ""
 echo -e "Bypass on Recovery"
 if [ -d "/Volumes/Macintosh HD - Data" ]; then
-re	diskutil rename "Macintosh HD - Data" "Data"
+  diskutil rename "Macintosh HD - Data" "Data"
 fi
 echo -e "Tạo người dùng mới"
 echo -e "Nhấn Enter để chuyển bước tiếp theo, có thể không điền sẽ tự động nhận giá trị mặc định"
