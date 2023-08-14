@@ -6,7 +6,7 @@ echo -e "Bypass on Recovery"
 if [ -d "/Volumes/Macintosh HD - Data" ]; then
   diskutil rename "Macintosh HD - Data" "Data"
 fi
-echo -e "User mới: macbook, password: 1234"
+echo -e "User default: macbook, password: 1234"
 read realName
 realName="${realName:=Macbook}"
 username="${username:=macbook}"
