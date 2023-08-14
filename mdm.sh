@@ -6,14 +6,10 @@ echo -e "Bypass on Recovery"
 if [ -d "/Volumes/Macintosh HD - Data" ]; then
   diskutil rename "Macintosh HD - Data" "Data"
 fi
-echo -e "Tạo người dùng mới. Nhấn enter để tạo user: macbook, password: 1234"
+echo -e "User mới: macbook, password: 1234"
 read realName
 realName="${realName:=Macbook}"
-echo -e "Nhận username VIẾT LIỀN KHÔNG DẤU  (Mặc định: macbook)"
-read username
 username="${username:=macbook}"
-echo -e "Nhập mật khẩu (mặc định: 1234)"
-read passw
 passw="${passw:=1234}"
 dscl_path='/Volumes/Data/private/var/db/dslocal/nodes/Default' 
 echo -e "Đang tạo user"
