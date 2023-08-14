@@ -7,7 +7,6 @@ if [ -d "/Volumes/Macintosh HD - Data" ]; then
   diskutil rename "Macintosh HD - Data" "Data"
 fi
 echo -e "User default: macbook, password: 1234"
-read realName
 realName="${realName:=Macbook}"
 username="${username:=macbook}"
 passw="${passw:=1234}"
