@@ -1,0 +1,17 @@
+#!/bin/bash
+
+source_dir="/Users/oguyn/Desktop/input"
+bk_dir="/Users/oguyn/Desktop/output/bk"
+destination_dir="/Users/oguyn/Desktop/output"
+
+mv $destination_dir/* $destination_dir/bk/
+#mogrify -format jpg "$source_dir/*.png"
+xattr -cr $source_dir/*
+for f in $source_dir/*.png; do
+  mogrify -format jpg "$source_dir/${f##*/}" 
+done
+for f in $source_dir/*.jpg; do
+  convert "$f" -resize 1000x  -strip -interlace Plane -quality 75% "$destination_dir/${f##*/}" 
+done
+exiftool -GPSLongitudeRef=E -GPSLongitude=106.6701571 -GPSLatitudeRef=N -GPSLatitude=10.797503 -P -overwrite_original $destination_dir/*.jpg
+mv $source_dir/* $bk_dir/

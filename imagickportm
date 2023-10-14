@@ -1,0 +1,28 @@
+#!/bin/bash
+
+echo -n "Enter desired width: "
+read width
+if [ -z "$width" ]; then
+  width=1200
+fi
+
+echo -n "Enter output name: " 
+read output_name
+output_name=${output_name// /-} 
+
+
+source_dir="/Users/oguyn/Desktop/input"
+destination_dir="/Users/oguyn/Desktop/output"
+
+mv $destination_dir/* $destination_dir/bk/
+i=1
+#mogrify -format jpg "$source_dir/*.png"
+xattr -cr $source_dir/*
+for f in $source_dir/*.png; do
+  mogrify -format jpg "$source_dir/${f##*/}" 
+done
+for f in $source_dir/*.jpg; do
+  convert "$f" -resize ${width}x  -strip -interlace Plane -quality 75% "$destination_dir/${output_name}-${i}.jpg" 
+  i=$((i+1))
+done
+exiftool -GPSLongitudeRef=E -GPSLongitude=106.6701571 -GPSLatitudeRef=N -GPSLatitude=10.797503 -P -overwrite_original $destination_dir/*.jpg
