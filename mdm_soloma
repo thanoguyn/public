@@ -1,0 +1,89 @@
+#!/bin/bash
+echo ""
+echo -e "Bypass MDM"
+echo ""
+echo -e "Available Volumes:"
+ls /Volumes/ | awk '{print NR ") " $0}'  # List volumes with numbers
+ 
+# Get user's choice for Macintosh HD
+read -p "Chọn số thứ tự của ổ đĩa sẽ là ổ Macintosh HD: (nếu bạn không biết làm gì hoặc ổ đĩa của bạn đã đúng chỉ cần gõ enter)" macHDChoice
+macHD="/Volumes/$(ls /Volumes/ | awk -v n=$macHDChoice 'NR==n {print $0}')"
+ 
+if [ ! -d "$macHD" ]; then
+  macHD="Macintosh HD"
+fi
+ 
+# Get user's choice for Macintosh HD Data
+read -p "Chọn số thứ tự của ổ đĩa sẽ là ổ Macintosh HD - Data: (nếu bạn không biết làm gì hoặc ổ đĩa của bạn đã đúng chỉ cần gõ enter)" macHDDataChoice
+macHDData="/Volumes/$(ls /Volumes/ | awk -v n=$macHDDataChoice 'NR==n {print $0}')"
+
+if [ ! -d "$macHDData" ]; then
+  macHD="Macintosh HD - Data"
+fi
+
+echo "$macHD"
+echo "$macHDData"
+
+
+# --- Rest of the script remains the same ---
+echo -e "User default: macbook, password: 1234"
+realName="${realName:=Macbook}"
+username="${username:=macbook}"
+passw="${passw:=1234}"
+dscl_path="$macHDData/private/var/db/dslocal/nodes/Default" 
+
+echo "----------------------------------------------------------------"
+echo -e "Bắt đầu tạo user"
+# Create user
+dscl -f "$dscl_path" localhost -create "/Local/Default/Users/$username"
+dscl -f "$dscl_path" localhost -create "/Local/Default/Users/$username" UserShell "/bin/zsh"
+dscl -f "$dscl_path" localhost -create "/Local/Default/Users/$username" RealName "$realName"
+dscl -f "$dscl_path" localhost -create "/Local/Default/Users/$username" RealName "$realName"
+dscl -f "$dscl_path" localhost -create "/Local/Default/Users/$username" UniqueID "501"
+dscl -f "$dscl_path" localhost -create "/Local/Default/Users/$username" PrimaryGroupID "20"
+mkdir "/Volumes/Data/Users/$username"
+dscl -f "$dscl_path" localhost -create "/Local/Default/Users/$username" NFSHomeDirectory "/Users/$username"
+dscl -f "$dscl_path" localhost -passwd "/Local/Default/Users/$username" "$passw"
+dscl -f "$dscl_path" localhost -append "/Local/Default/Groups/admin" GroupMembership $username
+
+echo -e "Tạo user Thành Công"
+echo "----------------------------------------------------------------"
+echo -e "Bắt đầu chặn file host"
+
+echo "0.0.0.0 deviceenrollment.apple.com" >> /etc/hosts
+echo "0.0.0.0 mdmenrollment.apple.com" >> /etc/hosts
+echo "0.0.0.0 iprofiles.apple.com" >> /etc/hosts
+
+echo -e "Chặn host thành công"
+echo "----------------------------------------------------------------"
+echo -e "Tạo file .AppleSetupDone"
+
+touch /Volumes/Data/private/var/db/.AppleSetupDone
+
+echo -e "Tạo thành công"
+echo "----------------------------------------------------------------"
+echo -e "Tắt ship"
+
+csrutil disable
+
+echo -e "Tắt ship thành công"
+echo "----------------------------------------------------------------"
+echo -e "Remove config profile"
+
+rm -rf  /var/db/ConfigurationProfiles/Settings/.cloudConfigHasActivationRecord
+rm -rf  /var/db/ConfigurationProfiles/Settings/.cloudConfigRecordFound
+touch  /var/db/ConfigurationProfiles/Settings/.cloudConfigProfileInstalled
+touch  /var/db/ConfigurationProfiles/Settings/.cloudConfigRecordNotFound
+
+echo -e "Remove config profile thành công"
+echo "----------------------"
+
+echo -e "Tắt ship"
+
+csrutil enable
+
+echo -e "Tắt ship thành công"
+
+
+echo "----------------------------------------------------------------"
+echo -e "Hoàn tất"
