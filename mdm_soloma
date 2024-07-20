@@ -2,23 +2,34 @@
 echo ""
 echo -e "Bypass MDM"
 echo ""
-echo -e "Available Volumes:"
-ls /Volumes/ | awk '{print NR ") " $0}'  # List volumes with numbers
  
-# Get user's choice for Macintosh HD
-read -p "Chọn số thứ tự của ổ đĩa sẽ là ổ Macintosh HD: (nếu bạn không biết làm gì hoặc ổ đĩa của bạn đã đúng chỉ cần gõ enter)" macHDChoice
-macHD="/Volumes/$(ls /Volumes/ | awk -v n=$macHDChoice 'NR==n {print $0}')"
- 
-if [ ! -d "$macHD" ]; then
-  macHD="Macintosh HD"
-fi
- 
-# Get user's choice for Macintosh HD Data
-read -p "Chọn số thứ tự của ổ đĩa sẽ là ổ Macintosh HD - Data: (nếu bạn không biết làm gì hoặc ổ đĩa của bạn đã đúng chỉ cần gõ enter)" macHDDataChoice
-macHDData="/Volumes/$(ls /Volumes/ | awk -v n=$macHDDataChoice 'NR==n {print $0}')"
+macHD="Macintosh HD"
 
-if [ ! -d "$macHDData" ]; then
-  macHDData="Macintosh HD - Data"
+if [ ! -d "$macHD" ]; then
+  # Get user's choice for Macintosh HD
+
+  echo "----------------------------------------------------------------"
+  echo -e "Available Volumes:"
+  ls /Volumes/ | awk '{print NR ") " $0}'  # List volumes with numbers
+
+  echo ""
+  read -p "Chọn số thứ tự của ổ đĩa sẽ là ổ Macintosh HD: (nếu bạn không biết làm gì hoặc ổ đĩa của bạn đã đúng chỉ cần gõ enter)" macHDChoice
+  macHD="/Volumes/$(ls /Volumes/ | awk -v n=$macHDChoice 'NR==n {print $0}')"
+fi
+
+
+macHDData="Macintosh HD - Data"
+
+if [ ! -d "$macHDData" ]; then 
+  # Get user's choice for Macintosh HD Data
+
+  echo "----------------------------------------------------------------"
+  echo -e "Available Volumes:"
+  ls /Volumes/ | awk '{print NR ") " $0}'  # List volumes with numbers
+
+  echo ""
+  read -p "Chọn số thứ tự của ổ đĩa sẽ là ổ Macintosh HD - Data: (nếu bạn không biết làm gì hoặc ổ đĩa của bạn đã đúng chỉ cần gõ enter)" macHDDataChoice
+  macHDData="/Volumes/$(ls /Volumes/ | awk -v n=$macHDDataChoice 'NR==n {print $0}')"
 fi
 
 echo "$macHD"
