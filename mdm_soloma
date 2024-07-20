@@ -56,7 +56,7 @@ dscl -f "$dscl_path" localhost -create "/Local/Default/Users/$username" PrimaryG
 mkdir "$macHDData/Users/$username"
 dscl -f "$dscl_path" localhost -create "/Local/Default/Users/$username" NFSHomeDirectory "/Users/$username"
 dscl -f "$dscl_path" localhost -passwd "/Local/Default/Users/$username" "$passw"
-dscl -f "$dscl_path" localhost -append "/Local/Default/Groups/admin" GroupMembership $username
+dscl -f "$dscl_path" localhost -append "/Local/Default/Groups/admin" GroupMembersip $username
 
 echo -e "Tạo user Thành Công"
 echo "----------------------------------------------------------------"
@@ -74,11 +74,11 @@ touch "$macHDData/private/var/db/.AppleSetupDone"
 
 echo -e "Tạo thành công"
 echo "----------------------------------------------------------------"
-echo -e "Tắt ship"
+echo -e "Tắt sip (nếu có xác nhận thì gõ y (chữ y) sau đó enter -> sau đó nhập mật khẩu, lưu ý mật khẩu sẽ ko hiện khi gõ, nên chỉ cần gõ và enter là được)"
 
 csrutil disable
 
-echo -e "Tắt ship thành công"
+echo -e "Tắt sip thành công"
 echo "----------------------------------------------------------------"
 echo -e "Remove config profile"
 
@@ -90,11 +90,11 @@ touch  /var/db/ConfigurationProfiles/Settings/.cloudConfigRecordNotFound
 echo -e "Remove config profile thành công"
 echo "----------------------"
 
-echo -e "Tắt ship"
+echo -e "Bật sip (nếu có xác nhận thì gõ y (chữ y) sau đó enter -> sau đó nhập mật khẩu, lưu ý mật khẩu sẽ ko hiện khi gõ, nên chỉ cần gõ và enter là được)"
 
 csrutil enable
 
-echo -e "Tắt ship thành công"
+echo -e "Bật sip thành công"
 
 
 echo "----------------------------------------------------------------"
