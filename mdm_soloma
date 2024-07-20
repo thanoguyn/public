@@ -22,6 +22,8 @@ macHDData="/Volumes/Macintosh HD - Data"
 
 if [ -d "/Volumes/Macintosh HD - Dữ Liệu" ]; then 
   macHDData="/Volumes/Macintosh HD - Dữ Liệu"
+elif [ -d "/Volumes/Data" ]; then 
+  macHDData="/Volumes/Data"
 elif [ ! -d "$macHDData" ]; then 
   # Get user's choice for Macintosh HD Data
 
