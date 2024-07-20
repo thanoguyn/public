@@ -18,7 +18,7 @@ read -p "Chọn số thứ tự của ổ đĩa sẽ là ổ Macintosh HD - Data
 macHDData="/Volumes/$(ls /Volumes/ | awk -v n=$macHDDataChoice 'NR==n {print $0}')"
 
 if [ ! -d "$macHDData" ]; then
-  macHD="Macintosh HD - Data"
+  macHDData="Macintosh HD - Data"
 fi
 
 echo "$macHD"
