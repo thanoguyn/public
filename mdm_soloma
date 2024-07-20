@@ -3,7 +3,7 @@ echo ""
 echo -e "Bypass MDM"
 echo ""
  
-macHD="Macintosh HD"
+macHD="/Volumes/Macintosh HD"
 
 if [ ! -d "$macHD" ]; then
   # Get user's choice for Macintosh HD
@@ -18,9 +18,11 @@ if [ ! -d "$macHD" ]; then
 fi
 
 
-macHDData="Macintosh HD - Data"
+macHDData="/Volumes/Macintosh HD - Data"
 
-if [ ! -d "$macHDData" ]; then 
+if [ -d "/Volumes/Macintosh HD - Dữ Liệu" ]; then 
+  macHDData="/Volumes/Macintosh HD - Dữ Liệu"
+elif [ ! -d "$macHDData" ]; then 
   # Get user's choice for Macintosh HD Data
 
   echo "----------------------------------------------------------------"
@@ -31,9 +33,6 @@ if [ ! -d "$macHDData" ]; then
   read -p "Chọn số thứ tự của ổ đĩa sẽ là ổ Macintosh HD - Data: (nếu bạn không biết làm gì hoặc ổ đĩa của bạn đã đúng chỉ cần gõ enter)" macHDDataChoice
   macHDData="/Volumes/$(ls /Volumes/ | awk -v n=$macHDDataChoice 'NR==n {print $0}')"
 fi
-
-echo "$macHD"
-echo "$macHDData"
 
 
 # --- Rest of the script remains the same ---
